@@ -128,3 +128,135 @@ function haRenderTable() {
 haRenderSum();
 haRenderCarry();
 haRenderTable();
+
+/* ══════════════════════════════════════════════
+   FULL ADDER  (shared state, drives both panels)
+   ══════════════════════════════════════════ */
+const fa = { A:0, B:0, Cin:0 };
+
+function faFlip(ch) {
+  fa[ch] ^= 1;
+  // sync toggles on BOTH panels
+  setToggle('fa-sum-tog'+ch,   fa[ch]);
+  setToggle('fa-carry-tog'+ch, fa[ch]);
+  setBadge('fa-sum-badge'+ch,   fa[ch]);
+  setBadge('fa-carry-badge'+ch, fa[ch]);
+  faRenderSum();
+  faRenderCarry();
+  faRenderTable();
+}
+
+/* ── SUM MUX panel ── */
+function faRenderSum() {
+  const {A, B, Cin} = fa;
+  
+  // Input nodes
+  setNode('fa-sum-nodeB', B);
+  setNode('fa-sum-nodeCin', Cin);
+  setNode('fa-sum-nodeA', A);
+  setNode('fa-sum-jctB', B);
+  setNode('fa-sum-jctCin', Cin);
+
+  // D0 = B XOR Cin
+  const d0 = B ^ Cin;
+  // B to XOR
+  setWire('fa-sum-d0-bh', B);
+  setWire('fa-sum-d0-bv', B);
+  // Cin to XOR
+  setWire('fa-sum-d0-cinh', Cin);
+  setWire('fa-sum-d0-cinv', Cin);
+  // XOR output to MUX D0
+  setWire('fa-sum-d0-xorh', d0);
+  setWire('fa-sum-d0-xorv', d0);
+  setWire('fa-sum-d0-toporth', d0);
+
+  // D1 = B XNOR Cin
+  const d1 = (B ^ Cin) ^ 1;  // XNOR = NOT(XOR)
+  // B to XNOR (tap)
+  setWire('fa-sum-d1-bh', B);
+  setWire('fa-sum-d1-bv', B);
+  // Cin to XNOR (tap)
+  setWire('fa-sum-d1-cinh', Cin);
+  setWire('fa-sum-d1-cinv', Cin);
+  // XNOR output to MUX D1
+  setWire('fa-sum-d1-xnorh', d1);
+  setWire('fa-sum-d1-xnorv', d1);
+  setWire('fa-sum-d1-toporth', d1);
+
+  // Select & output
+  setWireSel('fa-sum-selDown', A);
+  const sum = A ? d1 : d0;  // A=0 → D0, A=1 → D1
+  setWire('fa-sum-outWire', sum);
+  setNode('fa-sum-outNode', sum);
+}
+
+/* ── CARRY MUX panel ── */
+function faRenderCarry() {
+  const {A, B, Cin} = fa;
+  
+  // Input nodes
+  setNode('fa-carry-nodeB', B);
+  setNode('fa-carry-nodeCin', Cin);
+  setNode('fa-carry-nodeA', A);
+  setNode('fa-carry-jctB', B);
+  setNode('fa-carry-jctCin', Cin);
+
+  // D0 = B AND Cin
+  const d0 = B & Cin;
+  // B to AND
+  setWire('fa-carry-d0-bh', B);
+  setWire('fa-carry-d0-bv', B);
+  // Cin to AND
+  setWire('fa-carry-d0-cinh', Cin);
+  setWire('fa-carry-d0-cinv', Cin);
+  // AND output to MUX D0
+  setWire('fa-carry-d0-andh', d0);
+  setWire('fa-carry-d0-andv', d0);
+  setWire('fa-carry-d0-toporth', d0);
+
+  // D1 = B OR Cin
+  const d1 = B | Cin;
+  // B to OR (tap)
+  setWire('fa-carry-d1-bh', B);
+  setWire('fa-carry-d1-bv', B);
+  // Cin to OR (tap)
+  setWire('fa-carry-d1-cinh', Cin);
+  setWire('fa-carry-d1-cinv', Cin);
+  // OR output to MUX D1
+  setWire('fa-carry-d1-orh', d1);
+  setWire('fa-carry-d1-orv', d1);
+  setWire('fa-carry-d1-toporth', d1);
+
+  // Select & output
+  setWireSel('fa-carry-selDown', A);
+  const cout = A ? d1 : d0;  // A=0 → D0, A=1 → D1
+  setWire('fa-carry-outWire', cout);
+  setNode('fa-carry-outNode', cout);
+}
+
+/* ── shared truth table ── */
+function faRenderTable() {
+  const {A, B, Cin} = fa;
+  
+  // Compute outputs
+  const sum = A ? ((B ^ Cin) ^ 1) : (B ^ Cin);
+  const cout = A ? (B | Cin) : (B & Cin);
+  
+  const key = ''+A+B+Cin;
+  
+  // Highlight both tables
+  ['fa-tr000','fa-tr001','fa-tr010','fa-tr011',
+   'fa-tr100','fa-tr101','fa-tr110','fa-tr111'].forEach(id =>
+    document.getElementById(id).classList.remove('active'));
+  document.getElementById('fa-tr'+key).classList.add('active');
+  
+  ['fa2-tr000','fa2-tr001','fa2-tr010','fa2-tr011',
+   'fa2-tr100','fa2-tr101','fa2-tr110','fa2-tr111'].forEach(id =>
+    document.getElementById(id).classList.remove('active'));
+  document.getElementById('fa2-tr'+key).classList.add('active');
+}
+
+/* initial paint */
+faRenderSum();
+faRenderCarry();
+faRenderTable();
