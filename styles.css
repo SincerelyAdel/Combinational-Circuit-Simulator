@@ -131,3 +131,257 @@ tr.active { background:rgba(126,200,227,0.06); }
 
 .mux-body     { fill:#1a2332; stroke:#3a4f6b; stroke-width:1.5; }
 .vcc-bar      { stroke:#e85d5d; stroke-width:2.2; }
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE DESIGN - Tablets & Mobile
+   ══════════════════════════════════════════ */
+
+/* Tablets (portrait) and smaller desktops */
+@media (max-width: 1024px) {
+  .container {
+    max-width: 95%;
+    padding: 20px 16px;
+  }
+  
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .app-header h1 {
+    font-size: 1.4rem;
+  }
+  
+  .app-header p {
+    font-size: 0.65rem;
+  }
+}
+
+/* Tablets (portrait) and large phones */
+@media (max-width: 768px) {
+  body {
+    padding: 16px 8px 32px;
+  }
+  
+  .app-header h1 {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+  }
+  
+  .app-header p {
+    font-size: 0.6rem;
+  }
+  
+  /* Nav tabs wrap better */
+  .nav-tabs {
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  
+  .nav-tab {
+    font-size: 0.7rem;
+    padding: 5px 12px;
+  }
+  
+  /* Input toggles stack on small screens */
+  .inputs-row {
+    gap: 24px;
+    margin-bottom: 16px;
+  }
+  
+  .input-label {
+    font-size: 0.85rem;
+    min-width: 40px;
+  }
+  
+  .toggle {
+    width: 48px;
+    height: 26px;
+  }
+  
+  .toggle .knob {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .toggle.on .knob {
+    left: 24px;
+  }
+  
+  .val-badge {
+    font-size: 0.8rem;
+  }
+  
+  /* Section titles */
+  .section-title h2 {
+    font-size: 1rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.65rem;
+  }
+  
+  /* Truth tables */
+  table {
+    font-size: 0.7rem;
+  }
+  
+  th, td {
+    padding: 3px 8px;
+  }
+  
+  /* Container */
+  .container {
+    padding: 20px 12px 16px;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  body {
+    padding: 12px 4px 24px;
+  }
+  
+  .app-header {
+    margin-bottom: 12px;
+  }
+  
+  .app-header h1 {
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+  
+  .app-header p {
+    font-size: 0.55rem;
+    letter-spacing: 1px;
+  }
+  
+  /* Nav tabs - smaller, might wrap to 2 rows */
+  .nav-tabs {
+    gap: 4px;
+    margin-bottom: 12px;
+  }
+  
+  .nav-tab {
+    font-size: 0.65rem;
+    padding: 4px 10px;
+  }
+  
+  /* Inputs - stack vertically on very small screens */
+  .inputs-row {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+  
+  .input-group {
+    gap: 8px;
+  }
+  
+  .input-label {
+    font-size: 0.8rem;
+    min-width: 35px;
+  }
+  
+  .toggle {
+    width: 44px;
+    height: 24px;
+  }
+  
+  .toggle .knob {
+    width: 16px;
+    height: 16px;
+    top: 2px;
+    left: 2px;
+  }
+  
+  .toggle.on .knob {
+    left: 22px;
+  }
+  
+  /* Section titles */
+  .section-title h2 {
+    font-size: 0.9rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+  }
+  
+  /* Truth tables - more compact */
+  .truth-table {
+    margin-top: 12px;
+    overflow-x: auto;
+  }
+  
+  table {
+    font-size: 0.65rem;
+  }
+  
+  th, td {
+    padding: 2px 6px;
+  }
+  
+  /* SVG scaling for small screens */
+  svg {
+    width: 100%;
+    height: auto;
+  }
+  
+  /* Output labels smaller */
+  .label-out {
+    font-size: 12px;
+  }
+  
+  .label-bright {
+    font-size: 11px;
+  }
+  
+  /* Container tighter */
+  .container {
+    padding: 16px 10px 12px;
+    border-radius: 10px;
+  }
+  
+  /* Equation text smaller */
+  svg text[style*="font-size:10px"] {
+    font-size: 8px;
+  }
+}
+
+/* Very small phones (iPhone SE, etc.) */
+@media (max-width: 375px) {
+  .app-header h1 {
+    font-size: 0.9rem;
+  }
+  
+  .nav-tab {
+    font-size: 0.6rem;
+    padding: 4px 8px;
+  }
+  
+  .section-title h2 {
+    font-size: 0.85rem;
+  }
+  
+  table {
+    font-size: 0.6rem;
+  }
+  
+  th, td {
+    padding: 2px 4px;
+  }
+}
+
+/* Landscape mode adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+  .inputs-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  svg {
+    max-height: 60vh;
+  }
+}
